@@ -1,3 +1,8 @@
+# 参考になりました
+
+[とほほのNext.js入門 - とほほのWWW入門](https://www.tohoho-web.com/ex/nextjs.html)
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
