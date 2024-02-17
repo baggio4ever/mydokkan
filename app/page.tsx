@@ -9,11 +9,10 @@ const NotoSans = Noto_Sans({ weight: '400', preload: false });
 
 const Gozita = '/images/GFAADCqboAAf2_T.png';
 const BlueCombi = '/images/FKVYrTbakAE-gys.png';
-const Super3 = '/images/GBV7TPQa4AABls6.png';
 
 export default function Home() {
   const searchParams = useSearchParams();
-  const val=searchParams.get('val');
+  const val = searchParams.get('val');
   return (
     <div className=" text-white">
       <div className="font-bold text-5xl p-2">
