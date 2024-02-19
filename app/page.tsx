@@ -2,17 +2,25 @@
 import Link from 'next/link'
 import { Roboto, Noto_Sans } from 'next/font/google';
 import { useSearchParams } from 'next/navigation';
+import getConfig from 'next/config';
 
+//const { publicRuntimeConfig } = getConfig();
 
 const Roboto900 = Roboto({ weight: '900', preload: false });
 const NotoSans = Noto_Sans({ weight: '400', preload: false });
 
-const Gozita = '/images/GFAADCqboAAf2_T.png';
+//console.log('publicRuntimeConfig:');
+//console.log(publicRuntimeConfig);
+
+//const basePath = (publicRuntimeConfig && publicRuntimeConfig.basePath) || "";
+const Gozita = "/images/GFAADCqboAAf2_T.png";
 const BlueCombi = '/images/FKVYrTbakAE-gys.png';
 
 export default function Home() {
   const searchParams = useSearchParams();
   const val = searchParams.get('val');
+
+
   return (
     <div className=" text-white">
       <div className="font-bold text-5xl p-2">
