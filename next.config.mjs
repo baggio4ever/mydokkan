@@ -4,9 +4,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     output: "export",
-/*    basePath: isProd ? SUB_DIRECTORY : "",
-    assetPrefix: isProd ? SUB_DIRECTORY : "",
-
+//    basePath: "/mydokkan",
+//    assetPrefix: "/mydokkan/",
+/*
     publicRuntimeConfig: {
         basePath: isProd ? SUB_DIRECTORY : "",
     }
