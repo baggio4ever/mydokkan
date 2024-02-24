@@ -19,7 +19,7 @@ const Gozita = "/images/GFAADCqboAAf2_T.png";
 const BlueCombi = '/images/FKVYrTbakAE-gys.png';
 
 const APP_NAME = 'myDokkan';
-const APP_VERSION = '0.0.5';
+const APP_VERSION = '0.0.6';
 const REACT_VERSION = React.version;
 
 function AppTitleHeaer() {

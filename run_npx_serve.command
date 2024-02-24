@@ -1,1 +1,1 @@
-npx serve@latest out
+npx serve@latest dist
