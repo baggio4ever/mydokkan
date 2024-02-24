@@ -1,3 +1,16 @@
+# 開発中はこれ
+npm run dev
+
+# ビルド(outディレクトリに出力される)
+npm run build
+
+# distディレクトリにコピー(outディレクトリを dist/mydokkanにコピー)
+./copy_to_dist.command
+
+# S3へデプロイ(out/mydokkanをアップロード)
+./upload2s3.command
+
+
 # 参考になりました
 
 [とほほのNext.js入門 - とほほのWWW入門](https://www.tohoho-web.com/ex/nextjs.html)

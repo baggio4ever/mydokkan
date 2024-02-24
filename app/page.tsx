@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { Roboto, Noto_Sans } from 'next/font/google';
+//import { Roboto, Noto_Sans } from 'next/font/google';
 import { useState } from 'react';
 //import { useSearchParams } from 'next/navigation';
 //import getConfig from 'next/config';
@@ -8,24 +8,46 @@ import React from 'react';
 
 //const { publicRuntimeConfig } = getConfig();
 
-const Roboto900 = Roboto({ weight: '900', preload: false });
-const NotoSans = Noto_Sans({ weight: '400', preload: false });
+//const Roboto900 = Roboto({ weight: '900', preload: false });
+//const NotoSans = Noto_Sans({ weight: '400', preload: false });
 
 //console.log('publicRuntimeConfig:');
 //console.log(publicRuntimeConfig);
 
 //const basePath = (publicRuntimeConfig && publicRuntimeConfig.basePath) || "";
-const Gozita = "/images/GFAADCqboAAf2_T.png";
-const BlueCombi = '/images/FKVYrTbakAE-gys.png';
+//const Gozita = "/images/GFAADCqboAAf2_T.png";
+//const BlueCombi = '/images/FKVYrTbakAE-gys.png';
 
 const APP_NAME = 'myDokkan';
-const APP_VERSION = '0.0.6';
+const APP_VERSION = '0.0.7';
 const REACT_VERSION = React.version;
 
 function AppTitleHeaer() {
+  const [infoOpened, setInfoOpened] = useState(false);
   return (
-    <div className=' font-bold text-3xl'>
-      {APP_NAME} {APP_VERSION}
+    <div>
+      <div className='flex items-end gap-1'>
+        <div className=' font-bold text-3xl'>
+          {APP_NAME}
+        </div>
+        <div>
+          {APP_VERSION}
+        </div>
+        <div onClick={(ev) => { setInfoOpened(!infoOpened) }}>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+          </svg>
+        </div>
+      </div>
+
+      {infoOpened &&
+        <div className='p-2'>
+          <div>React</div>
+          <div>Next.js</div>
+          <div>Tailwind CSS</div>
+          <div>heroicon</div>
+        </div>
+      }
     </div>
   );
 }
@@ -51,12 +73,17 @@ function getSpRensu(ryu: number): number {
 function RensuTable() {
   const [ryuseki, setRyuseki] = useState(0);
 
+  function handleOnChange(ev: React.ChangeEvent<HTMLInputElement>) {
+    //    console.log(ev.target.value);
+    setRyuseki(parseInt(ev.target.value));
+  }
+
   return (
     <div>
       <ModeTitle title='龍石数から可能な連数を求める' />
       <div>
         龍石:
-        <input type='number' value={ryuseki} placeholder='龍石数' onChange={(e) => { console.log(e.target.value); setRyuseki(parseInt(e.target.value)) }} className=' bg-gray-700 text-right w-32'></input>
+        <input type='number' value={ryuseki} placeholder='龍石数' onChange={handleOnChange} className=' bg-gray-700 text-xl text-right w-28 rounded-md'></input>
         個
       </div>
       <div>
@@ -80,13 +107,17 @@ function RyusekiTable() {
     const ret = Math.floor(ren / 40) * 3 * 50 + mod * 5;
     return ret;
   }
+  function handleOnChange(ev: React.ChangeEvent<HTMLInputElement>) {
+    //    console.log(ev.target.value);
+    setRensu(parseInt(ev.target.value));
+  }
 
   return (
     <div>
       <ModeTitle title='連数から必要な龍石数を求める' />
       <div>
         連数:
-        <input type='number' value={rensu} onChange={(e) => { console.log(e.target.value); setRensu(parseInt(e.target.value)) }} className='bg-gray-700 text-right w-32'></input>
+        <input type='number' value={rensu} onChange={handleOnChange} className='bg-gray-700 text-right w-32'></input>
         連
       </div>
       <div>
