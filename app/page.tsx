@@ -4,6 +4,7 @@ import { Roboto, Noto_Sans } from 'next/font/google';
 import { useState } from 'react';
 //import { useSearchParams } from 'next/navigation';
 //import getConfig from 'next/config';
+import React from 'react';
 
 //const { publicRuntimeConfig } = getConfig();
 
@@ -19,6 +20,7 @@ const BlueCombi = '/images/FKVYrTbakAE-gys.png';
 
 const APP_NAME = 'myDokkan';
 const APP_VERSION = '0.0.2';
+const REACT_VERSION = React.version;
 
 function AppTitleHeaer() {
   return (
@@ -56,20 +58,41 @@ function RensuTable() {
         個
       </div>
       <div>
-        通常ガシャ:{getNormalRensu(ryuseki)}
+        通常ガシャ:{getNormalRensu(ryuseki)}連
       </div>
       <div>
-        記念ガシャ:{getSpRensu(ryuseki)}
+        記念ガシャ:{getSpRensu(ryuseki)}連
       </div>
     </div>
   );
 }
 
 function RyusekiTable() {
+  const [rensu, setRensu] = useState(0);
+
+  function getNormalRyuseki(ren: number): number {
+    return ren*5;
+  }
+  function getSpRyuseki(ren: number): number {
+    const mod = ren % 40;
+    const ret = Math.floor(ren/40)*3*50 + mod*5;
+    return ret;
+  }
+
   return (
     <div>
       <ModeTitle title='連数から必要な龍石数を求める' />
-      連数:
+      <div>
+        連数:
+        <input type='number' value={rensu} onChange={(e) => { console.log(e.target.value); setRensu(parseInt(e.target.value)) }} className='bg-gray-700 text-right w-32'></input>
+        連
+      </div>
+      <div>
+        通常ガシャ:{getNormalRyuseki(rensu)}個
+      </div>
+      <div>
+        記念ガシャ:{getSpRyuseki(rensu)}個
+      </div>
     </div>
   );
 }
