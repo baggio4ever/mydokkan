@@ -19,7 +19,7 @@ const Gozita = "/images/GFAADCqboAAf2_T.png";
 const BlueCombi = '/images/FKVYrTbakAE-gys.png';
 
 const APP_NAME = 'myDokkan';
-const APP_VERSION = '0.0.2';
+const APP_VERSION = '0.0.5';
 const REACT_VERSION = React.version;
 
 function AppTitleHeaer() {
@@ -38,16 +38,18 @@ function ModeTitle({ title }: ModeTitleProps) {
     <div>{title}</div>
   );
 }
+
+function getNormalRensu(ryu: number): number {
+  return Math.floor(ryu / 50) * 10;
+}
+
+function getSpRensu(ryu: number): number {
+  const mod = ryu % 150;
+  return Math.floor(ryu / 150) * 40 + Math.floor(mod / 50) * 10;
+}
+
 function RensuTable() {
   const [ryuseki, setRyuseki] = useState(0);
-
-  function getNormalRensu(ryu: number): number {
-    return Math.floor(ryu / 50) * 10;
-  }
-  function getSpRensu(ryu: number): number {
-    const mod = ryu % 150;
-    return Math.floor(ryu / 150) * 40 + Math.floor(mod / 50) * 10;
-  }
 
   return (
     <div>
@@ -71,11 +73,11 @@ function RyusekiTable() {
   const [rensu, setRensu] = useState(0);
 
   function getNormalRyuseki(ren: number): number {
-    return ren*5;
+    return ren * 5;
   }
   function getSpRyuseki(ren: number): number {
     const mod = ren % 40;
-    const ret = Math.floor(ren/40)*3*50 + mod*5;
+    const ret = Math.floor(ren / 40) * 3 * 50 + mod * 5;
     return ret;
   }
 
@@ -97,6 +99,46 @@ function RyusekiTable() {
   );
 }
 
+function RyusekiTable2() {
+  const ryusekis = [
+    100,
+    500,
+    1000,
+    1500,
+    2000,
+    2500,
+    3000,
+    3500,
+    4000,
+    4500,
+    5000
+  ];
+  const rows = ryusekis.map((v) => {
+    return <tr key={v}>
+      <th>{v.toLocaleString()}</th>
+      <td>{getNormalRensu(v).toLocaleString()}</td>
+      <td>{getSpRensu(v).toLocaleString()}</td>
+    </tr>;
+  });
+  return (
+    <div>
+      <ModeTitle title='目安' />
+      <table className=' text-center'>
+        <thead>
+          <tr>
+            <th>龍石</th>
+            <th>通常ガシャ</th>
+            <th>記念ガシャ</th>
+          </tr>
+        </thead>
+        <tbody className='text-right'>
+          {rows}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 export default function Home() {
   /*
   buildしたらエラー。Suspenseでラップが必要みたいなのでコメント
@@ -110,6 +152,7 @@ export default function Home() {
       <div className='flex flex-col gap-3 p-3'>
         <RensuTable />
         <RyusekiTable />
+        <RyusekiTable2 />
       </div>
       {/*
       <div>
