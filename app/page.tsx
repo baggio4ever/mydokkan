@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 //import { Roboto, Noto_Sans } from 'next/font/google';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 //import { useSearchParams } from 'next/navigation';
 //import getConfig from 'next/config';
 import React from 'react';
@@ -19,7 +19,7 @@ import React from 'react';
 //const BlueCombi = '/images/FKVYrTbakAE-gys.png';
 
 const APP_NAME = 'myDokkan';
-const APP_VERSION = '0.0.9';
+const APP_VERSION = '0.1.2';
 const REACT_VERSION = React.version;
 
 interface LibInfo {
@@ -27,6 +27,25 @@ interface LibInfo {
   version: string;
   url: string;
 };
+
+function CommonFrame({ children }: { children: ReactNode }) {
+  return (
+    <div className='border-2 hover:border-blue-400 border-blue-900 p-4 hover:bg-gray-800 bg-gray-950 rounded-md'>
+      {children}
+    </div>
+  );
+}
+
+interface NumberInputProps {
+  value: number;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+};
+
+function NumberInput({ value, onChange }: NumberInputProps) {
+  return (
+    <input type='number' value={value} onChange={onChange} className=' bg-gray-700 text-xl text-right w-28 rounded-md'></input>
+  );
+}
 
 function AppTitleHeaer() {
   const [infoOpened, setInfoOpened] = useState(false);
@@ -58,14 +77,13 @@ function AppTitleHeaer() {
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
           <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
         </svg>
-
         <a key={v.name} href={v.url} title={v.version} target='_blank'>{v.name}</a>
       </div>
     );
   });
 
   return (
-    <div>
+    <div className='mx-2'>
       <div className='flex items-end gap-1'>
         <div className=' font-bold text-3xl'>
           {APP_NAME}
@@ -81,7 +99,7 @@ function AppTitleHeaer() {
       </div>
 
       {infoOpened &&
-        <div className='p-2'>
+        <div className='p-2 text-sm'>
           {lib_divs}
         </div>
       }
@@ -94,7 +112,9 @@ interface ModeTitleProps {
 }
 function ModeTitle({ title }: ModeTitleProps) {
   return (
-    <div>{title}</div>
+    <div className='mb-2'>
+      {title}
+    </div>
   );
 }
 
@@ -116,20 +136,23 @@ function RensuTable() {
   }
 
   return (
-    <div>
+    <CommonFrame>
       <ModeTitle title='龍石数から可能な連数を求める' />
-      <div>
+      <div className='py-1'>
         龍石:
-        <input type='number' value={ryuseki} placeholder='龍石数' onChange={handleOnChange} className=' bg-gray-700 text-xl text-right w-28 rounded-md'></input>
+        <NumberInput value={ryuseki} onChange={handleOnChange} />
+        {/*
+        <input type='number' value={ryuseki} onChange={handleOnChange} className=' bg-gray-700 text-xl text-right w-28 rounded-md'></input>
+  */}
         個
       </div>
       <div>
-        通常ガシャ:{getNormalRensu(ryuseki)}連
+        通常ガシャ:{getNormalRensu(ryuseki).toLocaleString()}連
       </div>
       <div>
-        記念ガシャ:{getSpRensu(ryuseki)}連
+        記念ガシャ:{getSpRensu(ryuseki).toLocaleString()}連
       </div>
-    </div>
+    </CommonFrame>
   );
 }
 
@@ -150,20 +173,23 @@ function RyusekiTable() {
   }
 
   return (
-    <div>
+    <CommonFrame>
       <ModeTitle title='連数から必要な龍石数を求める' />
-      <div>
+      <div className='py-1'>
         連数:
+        <NumberInput value={rensu} onChange={handleOnChange} />
+        {/*
         <input type='number' value={rensu} onChange={handleOnChange} className='bg-gray-700 text-right w-32'></input>
+  */}
         連
       </div>
       <div>
-        通常ガシャ:{getNormalRyuseki(rensu)}個
+        通常ガシャ:{getNormalRyuseki(rensu).toLocaleString()}個
       </div>
       <div>
-        記念ガシャ:{getSpRyuseki(rensu)}個
+        記念ガシャ:{getSpRyuseki(rensu).toLocaleString()}個
       </div>
-    </div>
+    </CommonFrame>
   );
 }
 
@@ -191,7 +217,7 @@ function RyusekiTable2() {
   });
 
   return (
-    <div>
+    <CommonFrame>
       <ModeTitle title='目安' />
       <table className=' text-center'>
         <thead>
@@ -205,9 +231,10 @@ function RyusekiTable2() {
           {rows}
         </tbody>
       </table>
-    </div>
+    </CommonFrame>
   );
 }
+
 
 export default function Home() {
   /*
@@ -219,7 +246,7 @@ export default function Home() {
   return (
     <div className=' p-2'>
       <AppTitleHeaer />
-      <div className='flex flex-col gap-3 p-3'>
+      <div className='flex flex-col gap-3 p-3 w-fit'>
         <RensuTable />
         <RyusekiTable />
         <RyusekiTable2 />
