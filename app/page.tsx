@@ -19,11 +19,51 @@ import React from 'react';
 //const BlueCombi = '/images/FKVYrTbakAE-gys.png';
 
 const APP_NAME = 'myDokkan';
-const APP_VERSION = '0.0.7';
+const APP_VERSION = '0.0.9';
 const REACT_VERSION = React.version;
+
+interface LibInfo {
+  name: string;
+  version: string;
+  url: string;
+};
 
 function AppTitleHeaer() {
   const [infoOpened, setInfoOpened] = useState(false);
+  const libs: LibInfo[] = [
+    {
+      name: 'React',
+      version: REACT_VERSION,
+      url: 'https://ja.react.dev/',
+    },
+    {
+      name: 'Next.js',
+      version: '',
+      url: 'https://nextjs.org/',
+    },
+    {
+      name: 'Tailwind CSS',
+      version: '',
+      url: 'https://tailwindcss.com/',
+    },
+    {
+      name: 'heroicon',
+      version: '',
+      url: 'https://heroicons.com/',
+    }
+  ];
+  const lib_divs = libs.map((v) => {
+    return (
+      <div className='flex items-center gap-1'>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+        </svg>
+
+        <a key={v.name} href={v.url} title={v.version} target='_blank'>{v.name}</a>
+      </div>
+    );
+  });
+
   return (
     <div>
       <div className='flex items-end gap-1'>
@@ -42,10 +82,7 @@ function AppTitleHeaer() {
 
       {infoOpened &&
         <div className='p-2'>
-          <div>React</div>
-          <div>Next.js</div>
-          <div>Tailwind CSS</div>
-          <div>heroicon</div>
+          {lib_divs}
         </div>
       }
     </div>
@@ -144,6 +181,7 @@ function RyusekiTable2() {
     4500,
     5000
   ];
+
   const rows = ryusekis.map((v) => {
     return <tr key={v}>
       <th>{v.toLocaleString()}</th>
@@ -151,6 +189,7 @@ function RyusekiTable2() {
       <td>{getSpRensu(v).toLocaleString()}</td>
     </tr>;
   });
+
   return (
     <div>
       <ModeTitle title='目安' />
