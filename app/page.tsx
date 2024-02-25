@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-//import { Roboto, Noto_Sans } from 'next/font/google';
+import { Roboto, Noto_Sans } from 'next/font/google';
 import { ReactNode, useState } from 'react';
 //import { useSearchParams } from 'next/navigation';
 //import getConfig from 'next/config';
@@ -9,7 +9,7 @@ import React from 'react';
 //const { publicRuntimeConfig } = getConfig();
 
 //const Roboto900 = Roboto({ weight: '900', preload: false });
-//const NotoSans = Noto_Sans({ weight: '400', preload: false });
+const NotoSans = Noto_Sans({ weight: '700', preload: false });
 
 //console.log('publicRuntimeConfig:');
 //console.log(publicRuntimeConfig);
@@ -19,7 +19,7 @@ import React from 'react';
 //const BlueCombi = '/images/FKVYrTbakAE-gys.png';
 
 const APP_NAME = 'myDokkan';
-const APP_VERSION = '0.1.2';
+const APP_VERSION = '0.1.5';
 const REACT_VERSION = React.version;
 
 interface LibInfo {
@@ -28,6 +28,11 @@ interface LibInfo {
   url: string;
 };
 
+/**
+ * 共通フレーム
+ * @param 
+ * @returns 
+ */
 function CommonFrame({ children }: { children: ReactNode }) {
   return (
     <div className='border-2 hover:border-blue-400 border-blue-900 p-4 hover:bg-gray-800 bg-gray-950 rounded-md'>
@@ -38,12 +43,16 @@ function CommonFrame({ children }: { children: ReactNode }) {
 
 interface NumberInputProps {
   value: number;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onValueChange: (v: number) => void;
 };
 
-function NumberInput({ value, onChange }: NumberInputProps) {
+function NumberInput({ value, onValueChange }: NumberInputProps) {
   return (
-    <input type='number' value={value} onChange={onChange} className=' bg-gray-700 text-xl text-right w-28 rounded-md'></input>
+    <input type='number' value={value} onChange={(ev) => {
+      const v = ev.target.value || '0';
+      const vn = parseInt(v);
+      onValueChange(vn);
+    }} className=' bg-gray-700 text-xl text-right w-28 rounded-md'></input>
   );
 }
 
@@ -71,13 +80,14 @@ function AppTitleHeaer() {
       url: 'https://heroicons.com/',
     }
   ];
+
   const lib_divs = libs.map((v) => {
     return (
-      <div className='flex items-center gap-1'>
+      <div key={v.name} className='flex items-center gap-1'>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
           <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
         </svg>
-        <a key={v.name} href={v.url} title={v.version} target='_blank'>{v.name}</a>
+        <a href={v.url} title={v.version} target='_blank'>{v.name}</a>
       </div>
     );
   });
@@ -85,7 +95,7 @@ function AppTitleHeaer() {
   return (
     <div className='mx-2'>
       <div className='flex items-end gap-1'>
-        <div className=' font-bold text-3xl'>
+        <div className={`text-3xl ${NotoSans.className}`}>
           {APP_NAME}
         </div>
         <div>
@@ -118,10 +128,20 @@ function ModeTitle({ title }: ModeTitleProps) {
   );
 }
 
+/**
+ * 通常ガシャでできる連数
+ * @param ryu 龍石の数
+ * @returns 連数
+ */
 function getNormalRensu(ryu: number): number {
   return Math.floor(ryu / 50) * 10;
 }
 
+/**
+ * 記念ガシャでできる連数
+ * @param ryu 龍石の数
+ * @returns 連数
+ */
 function getSpRensu(ryu: number): number {
   const mod = ryu % 150;
   return Math.floor(ryu / 150) * 40 + Math.floor(mod / 50) * 10;
@@ -130,9 +150,9 @@ function getSpRensu(ryu: number): number {
 function RensuTable() {
   const [ryuseki, setRyuseki] = useState(0);
 
-  function handleOnChange(ev: React.ChangeEvent<HTMLInputElement>) {
+  function handleOnChange(v: number) {
     //    console.log(ev.target.value);
-    setRyuseki(parseInt(ev.target.value));
+    setRyuseki(v);
   }
 
   return (
@@ -140,10 +160,7 @@ function RensuTable() {
       <ModeTitle title='龍石数から可能な連数を求める' />
       <div className='py-1'>
         龍石:
-        <NumberInput value={ryuseki} onChange={handleOnChange} />
-        {/*
-        <input type='number' value={ryuseki} onChange={handleOnChange} className=' bg-gray-700 text-xl text-right w-28 rounded-md'></input>
-  */}
+        <NumberInput value={ryuseki} onValueChange={handleOnChange} />
         個
       </div>
       <div>
@@ -162,14 +179,16 @@ function RyusekiTable() {
   function getNormalRyuseki(ren: number): number {
     return ren * 5;
   }
+  
   function getSpRyuseki(ren: number): number {
     const mod = ren % 40;
     const ret = Math.floor(ren / 40) * 3 * 50 + mod * 5;
     return ret;
   }
-  function handleOnChange(ev: React.ChangeEvent<HTMLInputElement>) {
+
+  function handleOnChange(v: number) {
     //    console.log(ev.target.value);
-    setRensu(parseInt(ev.target.value));
+    setRensu(v);
   }
 
   return (
@@ -177,10 +196,7 @@ function RyusekiTable() {
       <ModeTitle title='連数から必要な龍石数を求める' />
       <div className='py-1'>
         連数:
-        <NumberInput value={rensu} onChange={handleOnChange} />
-        {/*
-        <input type='number' value={rensu} onChange={handleOnChange} className='bg-gray-700 text-right w-32'></input>
-  */}
+        <NumberInput value={rensu} onValueChange={handleOnChange} />
         連
       </div>
       <div>
@@ -210,7 +226,7 @@ function RyusekiTable2() {
 
   const rows = ryusekis.map((v) => {
     return <tr key={v}>
-      <th>{v.toLocaleString()}</th>
+      <td>{v.toLocaleString()}</td>
       <td>{getNormalRensu(v).toLocaleString()}</td>
       <td>{getSpRensu(v).toLocaleString()}</td>
     </tr>;
@@ -222,9 +238,9 @@ function RyusekiTable2() {
       <table className=' text-center'>
         <thead>
           <tr>
-            <th>龍石</th>
-            <th>通常ガシャ</th>
-            <th>記念ガシャ</th>
+            <th className='w-16'>龍石</th>
+            <th className='w-24'>通常ガシャ</th>
+            <th className='w-24'>記念ガシャ</th>
           </tr>
         </thead>
         <tbody className='text-right'>

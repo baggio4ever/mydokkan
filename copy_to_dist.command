@@ -1,1 +1,1 @@
-cp -R out dist/mydokkan
+cp -Rf ./out/ ./dist/mydokkan/
