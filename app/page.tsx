@@ -16,7 +16,7 @@ const NotoSans = Noto_Sans({ weight: '700', preload: false });
 //const BlueCombi = '/images/FKVYrTbakAE-gys.png';
 
 const APP_NAME = 'myDokkan';
-const APP_VERSION = '0.1.6';
+const APP_VERSION = '0.1.7';
 const REACT_VERSION = React.version;
 
 interface LibInfo {
@@ -40,15 +40,15 @@ function CommonFrame({ children }: { children: ReactNode }) {
 
 interface NumberInputProps {
   value: number;
-  onValueChange: (v: number) => void;
+  onChangeValue: (v: number) => void;
 };
 
-function NumberInput({ value, onValueChange }: NumberInputProps) {
+function NumberInput({ value, onChangeValue }: NumberInputProps) {
   return (
     <input type='number' value={value} onChange={(ev) => {
       const v = ev.target.value || '0';
       const vn = parseInt(v);
-      onValueChange(vn);
+      onChangeValue(vn);
     }} className=' bg-gray-700 text-xl text-right w-28 rounded-md'></input>
   );
 }
@@ -155,10 +155,10 @@ function RensuTable() {
   return (
     <CommonFrame>
       <ModeTitle title='龍石数から可能な連数を求める' />
-      <div className='py-1'>
-        龍石:
-        <NumberInput value={ryuseki} onValueChange={handleOnChange} />
-        個
+      <div className='py-1 flex gap-1 items-center'>
+        <p>龍石:</p>
+        <NumberInput value={ryuseki} onChangeValue={handleOnChange} />
+        <p>個</p>
       </div>
       <div>
         通常ガシャ:{getNormalRensu(ryuseki).toLocaleString()}連
@@ -191,10 +191,10 @@ function RyusekiTable() {
   return (
     <CommonFrame>
       <ModeTitle title='連数から必要な龍石数を求める' />
-      <div className='py-1'>
-        連数:
-        <NumberInput value={rensu} onValueChange={handleOnChange} />
-        連
+      <div className='py-1 flex gap-1 items-center'>
+        <p>連数:</p>
+        <NumberInput value={rensu} onChangeValue={handleOnChange} />
+        <p>連</p>
       </div>
       <div>
         通常ガシャ:{getNormalRyuseki(rensu).toLocaleString()}個
