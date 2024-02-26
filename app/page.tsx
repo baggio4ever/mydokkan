@@ -11,15 +11,12 @@ import React from 'react';
 //const Roboto900 = Roboto({ weight: '900', preload: false });
 const NotoSans = Noto_Sans({ weight: '700', preload: false });
 
-//console.log('publicRuntimeConfig:');
-//console.log(publicRuntimeConfig);
-
 //const basePath = (publicRuntimeConfig && publicRuntimeConfig.basePath) || "";
 //const Gozita = "/images/GFAADCqboAAf2_T.png";
 //const BlueCombi = '/images/FKVYrTbakAE-gys.png';
 
 const APP_NAME = 'myDokkan';
-const APP_VERSION = '0.1.5';
+const APP_VERSION = '0.1.6';
 const REACT_VERSION = React.version;
 
 interface LibInfo {
