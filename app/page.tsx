@@ -16,7 +16,7 @@ const NotoSans = Noto_Sans({ weight: '700', preload: false });
 //const BlueCombi = '/images/FKVYrTbakAE-gys.png';
 
 const APP_NAME = 'myDokkan';
-const APP_VERSION = '0.1.7';
+const APP_VERSION = '0.1.8';
 const REACT_VERSION = React.version;
 
 interface LibInfo {
@@ -222,7 +222,7 @@ function RyusekiTable2() {
   ];
 
   const rows = ryusekis.map((v) => {
-    return <tr key={v}>
+    return <tr key={v} className='hover:bg-gray-700 hover:text-gray-50'>
       <td>{v.toLocaleString()}</td>
       <td>{getNormalRensu(v).toLocaleString()}</td>
       <td>{getSpRensu(v).toLocaleString()}</td>
@@ -232,15 +232,15 @@ function RyusekiTable2() {
   return (
     <CommonFrame>
       <ModeTitle title='目安' />
-      <table className=' text-center'>
-        <thead>
-          <tr>
-            <th className='w-16'>龍石</th>
-            <th className='w-24'>通常ガシャ</th>
-            <th className='w-24'>記念ガシャ</th>
+      <table className='divide-y divide-gray-500'>
+        <thead className='text-center'>
+          <tr className='text-gray-400 font-medium text-xs'>
+            <th scope='col' className='w-16'>龍石</th>
+            <th scope='col' className='w-24'>通常ガシャ</th>
+            <th scope='col' className='w-24'>記念ガシャ</th>
           </tr>
         </thead>
-        <tbody className='text-right'>
+        <tbody className='text-right divide-y divide-gray-500 text-gray-400'>
           {rows}
         </tbody>
       </table>
