@@ -7,13 +7,15 @@ npm run build
 # distディレクトリにコピー(outディレクトリを dist/mydokkanにコピー)
 ./copy_to_dist.command
 
-# S3へデプロイ(out/mydokkanをアップロード)
+# S3へデプロイ(dist/mydokkanをアップロード)
 ./upload2s3.command
 
 
 # 参考になりました
 
 [とほほのNext.js入門 - とほほのWWW入門](https://www.tohoho-web.com/ex/nextjs.html)
+
+[茶ポップ | Bg-patterns 背景パターン配布＆作成サイト](https://bg-patterns.com/?p=1595)
 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).

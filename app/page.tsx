@@ -5,6 +5,7 @@ import { ReactNode, useState } from 'react';
 //import { useSearchParams } from 'next/navigation';
 //import getConfig from 'next/config';
 import React from 'react';
+import mySetting from '../myConfig.mjs';
 
 //const { publicRuntimeConfig } = getConfig();
 
@@ -16,7 +17,7 @@ const NotoSans = Noto_Sans({ weight: '700', preload: false });
 //const BlueCombi = '/images/FKVYrTbakAE-gys.png';
 
 const APP_NAME = 'myDokkan';
-const APP_VERSION = '0.1.9';
+const APP_VERSION = '0.1.11';
 const REACT_VERSION = React.version;
 
 interface LibInfo {
@@ -90,7 +91,7 @@ function AppTitleHeaer() {
   });
 
   return (
-    <div className='mx-2'>
+    <div className='p-2 bg-black'>
       <div className='flex items-end gap-1'>
         <div className={`text-3xl ${NotoSans.className}`}>
           {APP_NAME}
@@ -261,14 +262,18 @@ export default function Home() {
   const searchParams = useSearchParams();
   const val = searchParams.get('val');
 */
+  const backgroundStyle = {
+    backgroundImage: `url('${mySetting.sub_dir}/images/p_da0580_l_da05800.png')`,
+  };
 
   return (
-    <div className=' p-2'>
+    <div style={backgroundStyle}>
       <AppTitleHeaer />
-      <div className='flex flex-col gap-3 p-3 w-fit'>
+      <div className='flex flex-col gap-2 p-3 w-fit'>
         <RensuTable />
         <RyusekiTable />
         <RyusekiTable2 />
+        <img src={`${mySetting.sub_dir}/images/p_da0580_m_da05800.svg`} />
       </div>
       {/*
       <div>
