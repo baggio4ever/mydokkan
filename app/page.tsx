@@ -16,7 +16,7 @@ const NotoSans = Noto_Sans({ weight: '700', preload: false });
 //const BlueCombi = '/images/FKVYrTbakAE-gys.png';
 
 const APP_NAME = 'myDokkan';
-const APP_VERSION = '0.1.8';
+const APP_VERSION = '0.1.9';
 const REACT_VERSION = React.version;
 
 interface LibInfo {
@@ -149,6 +149,9 @@ function RensuTable() {
 
   function handleOnChange(v: number) {
     //    console.log(ev.target.value);
+    if (v < 0) {
+      v = 0;
+    }
     setRyuseki(v);
   }
 
@@ -176,7 +179,7 @@ function RyusekiTable() {
   function getNormalRyuseki(ren: number): number {
     return ren * 5;
   }
-  
+
   function getSpRyuseki(ren: number): number {
     const mod = ren % 40;
     const ret = Math.floor(ren / 40) * 3 * 50 + mod * 5;
@@ -185,6 +188,9 @@ function RyusekiTable() {
 
   function handleOnChange(v: number) {
     //    console.log(ev.target.value);
+    if (v < 0) {
+      v = 0;
+    }
     setRensu(v);
   }
 
@@ -233,11 +239,11 @@ function RyusekiTable2() {
     <CommonFrame>
       <ModeTitle title='目安' />
       <table className='divide-y divide-gray-500'>
-        <thead className='text-center'>
+        <thead className='text-right'>
           <tr className='text-gray-400 font-medium text-xs'>
-            <th scope='col' className='w-16'>龍石</th>
-            <th scope='col' className='w-24'>通常ガシャ</th>
-            <th scope='col' className='w-24'>記念ガシャ</th>
+            <th scope='col' className='w-16'>龍石 [個]</th>
+            <th scope='col' className='w-32'>通常ガシャ [連]</th>
+            <th scope='col' className='w-32'>記念ガシャ [連]</th>
           </tr>
         </thead>
         <tbody className='text-right divide-y divide-gray-500 text-gray-400'>
