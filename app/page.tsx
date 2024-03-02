@@ -17,7 +17,7 @@ const NotoSans = Noto_Sans({ weight: '700', preload: false });
 //const BlueCombi = '/images/FKVYrTbakAE-gys.png';
 
 const APP_NAME = 'myDokkan';
-const APP_VERSION = '0.1.11';
+const APP_VERSION = '0.1.12';
 const REACT_VERSION = React.version;
 
 interface LibInfo {
@@ -263,7 +263,7 @@ export default function Home() {
   const val = searchParams.get('val');
 */
   const backgroundStyle = {
-    backgroundImage: `url('${mySetting.sub_dir}/images/p_da0580_l_da05800.png')`,
+    backgroundImage: `url('${mySetting.basePath}/images/p_da0580_l_da05800.png')`,
   };
 
   return (
@@ -273,7 +273,7 @@ export default function Home() {
         <RensuTable />
         <RyusekiTable />
         <RyusekiTable2 />
-        <img src={`${mySetting.sub_dir}/images/p_da0580_m_da05800.svg`} />
+        <img src={`${mySetting.basePath}/images/p_da0580_m_da05800.svg`} />
       </div>
       {/*
       <div>

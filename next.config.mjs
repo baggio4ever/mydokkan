@@ -1,14 +1,16 @@
 import mySettings from './myConfig.mjs';
 //const SUB_DIRECTORY = "/mydokkan";
-const isProd = process.env.NODE_ENV === "production";
+//const isProd = process.env.NODE_ENV === "production";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     output: "export",
     //    basePath: isProd ? "/mydokkan" : "",
-    assetPrefix: isProd ? "/mydokkan/" : "",
-    basePath: isProd ? mySettings.sub_dir : "",
+    //assetPrefix: isProd ? "/mydokkan/" : "",
+//    basePath: isProd ? mySettings.sub_dir : "",
 //    assetPrefix: isProd ? mySettings.sub_dir + '/' : "",
+    basePath: mySettings.basePath,
+    assetPrefix: mySettings.assetPrefix,
     /*
         publicRuntimeConfig: {
             basePath: isProd ? SUB_DIRECTORY : "",
