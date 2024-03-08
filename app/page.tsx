@@ -17,8 +17,11 @@ const NotoSans = Noto_Sans({ weight: '700', preload: false });
 //const BlueCombi = '/images/FKVYrTbakAE-gys.png';
 
 const APP_NAME = 'myDokkan';
-const APP_VERSION = '0.1.12';
+const APP_VERSION = '0.1.13';
 const REACT_VERSION = React.version;
+
+const NORMAL_GASYA = '通常ガシャ';
+const SP_GASYA = '記念ガシャ';
 
 interface LibInfo {
   name: string;
@@ -33,7 +36,7 @@ interface LibInfo {
  */
 function CommonFrame({ children }: { children: ReactNode }) {
   return (
-    <div className='border-2 hover:border-blue-400 border-blue-900 p-4 hover:bg-gray-800 bg-gray-950 rounded-md'>
+    <div className='border-4 hover:border-blue-400 border-gray-900 p-2 bg-gray-950 rounded-md'>
       {children}
     </div>
   );
@@ -120,7 +123,7 @@ interface ModeTitleProps {
 }
 function ModeTitle({ title }: ModeTitleProps) {
   return (
-    <div className='mb-2'>
+    <div className='mb-2 font-bold'>
       {title}
     </div>
   );
@@ -132,7 +135,11 @@ function ModeTitle({ title }: ModeTitleProps) {
  * @returns 連数
  */
 function getNormalRensu(ryu: number): number {
-  return Math.floor(ryu / 50) * 10;
+  return Math.floor(ryu / 5);
+}
+
+function getNormalRensuAmari(ryu: number): number {
+  return ryu % 5;
 }
 
 /**
@@ -142,9 +149,21 @@ function getNormalRensu(ryu: number): number {
  */
 function getSpRensu(ryu: number): number {
   const mod = ryu % 150;
-  return Math.floor(ryu / 150) * 40 + Math.floor(mod / 50) * 10;
+  return Math.floor(ryu / 150) * 40 + Math.floor(mod / 5);
 }
 
+function getSpRensuSet(ryu: number): number {
+  return Math.floor(ryu / 150);
+}
+
+function getSpRensuAmari(ryu: number): number {
+  return ryu % 5;
+}
+
+/**
+ * 龍石→連数
+ * @returns 
+ */
 function RensuTable() {
   const [ryuseki, setRyuseki] = useState(0);
 
@@ -164,16 +183,21 @@ function RensuTable() {
         <NumberInput value={ryuseki} onChangeValue={handleOnChange} />
         <p>個</p>
       </div>
+
       <div>
-        通常ガシャ:{getNormalRensu(ryuseki).toLocaleString()}連
+        {NORMAL_GASYA}:{getNormalRensu(ryuseki).toLocaleString()}連, 余り:{getNormalRensuAmari(ryuseki).toLocaleString()}個
       </div>
       <div>
-        記念ガシャ:{getSpRensu(ryuseki).toLocaleString()}連
+        {SP_GASYA}:{getSpRensu(ryuseki).toLocaleString()}連 ({getSpRensuSet(ryuseki)}セット), 余り:{getSpRensuAmari(ryuseki).toLocaleString()}個
       </div>
     </CommonFrame>
   );
 }
 
+/**
+ * 連数→龍石
+ * @returns 
+ */
 function RyusekiTable() {
   const [rensu, setRensu] = useState(0);
 
@@ -203,11 +227,12 @@ function RyusekiTable() {
         <NumberInput value={rensu} onChangeValue={handleOnChange} />
         <p>連</p>
       </div>
+
       <div>
-        通常ガシャ:{getNormalRyuseki(rensu).toLocaleString()}個
+        {NORMAL_GASYA}:{getNormalRyuseki(rensu).toLocaleString()}個
       </div>
       <div>
-        記念ガシャ:{getSpRyuseki(rensu).toLocaleString()}個
+        {SP_GASYA}:{getSpRyuseki(rensu).toLocaleString()}個
       </div>
     </CommonFrame>
   );
@@ -229,7 +254,7 @@ function RyusekiTable2() {
   ];
 
   const rows = ryusekis.map((v) => {
-    return <tr key={v} className='hover:bg-gray-700 hover:text-gray-50'>
+    return <tr key={v} className='hover:bg-gray-600 hover:text-gray-50'>
       <td>{v.toLocaleString()}</td>
       <td>{getNormalRensu(v).toLocaleString()}</td>
       <td>{getSpRensu(v).toLocaleString()}</td>
@@ -241,13 +266,13 @@ function RyusekiTable2() {
       <ModeTitle title='目安' />
       <table className='divide-y divide-gray-500'>
         <thead className='text-right'>
-          <tr className='text-gray-400 font-medium text-xs'>
+          <tr className='text-gray-300 font-medium text-xs'>
             <th scope='col' className='w-16'>龍石 [個]</th>
-            <th scope='col' className='w-32'>通常ガシャ [連]</th>
-            <th scope='col' className='w-32'>記念ガシャ [連]</th>
+            <th scope='col' className='w-32'>{NORMAL_GASYA} [連]</th>
+            <th scope='col' className='w-32'>{SP_GASYA} [連]</th>
           </tr>
         </thead>
-        <tbody className='text-right divide-y divide-gray-500 text-gray-400'>
+        <tbody className='text-right divide-y divide-gray-500 text-gray-300'>
           {rows}
         </tbody>
       </table>
@@ -269,11 +294,16 @@ export default function Home() {
   return (
     <div style={backgroundStyle}>
       <AppTitleHeaer />
-      <div className='flex flex-col gap-2 p-3 w-fit'>
-        <RensuTable />
-        <RyusekiTable />
-        <RyusekiTable2 />
+      <div className=' bg-black/70'>
+        <div className='flex flex-col gap-2 p-3 w-fit'>
+          <RensuTable />
+          <RyusekiTable />
+          <RyusekiTable2 />
+          {/*
+        画像ファイルの表示方法
         <img src={`${mySetting.basePath}/images/p_da0580_m_da05800.svg`} />
+  */}
+        </div>
       </div>
       {/*
       <div>
