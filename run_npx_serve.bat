@@ -1,0 +1,1 @@
+npx serve@latest dist

@@ -1,0 +1,1 @@
+xcopy out\* dist\mydokkan\ /E
