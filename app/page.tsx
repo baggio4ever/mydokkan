@@ -17,11 +17,13 @@ const NotoSans = Noto_Sans({ weight: '700', preload: false });
 //const BlueCombi = '/images/FKVYrTbakAE-gys.png';
 
 const APP_NAME = 'myDokkan';
-const APP_VERSION = '0.1.13';
+const APP_VERSION = '0.1.15';
 const REACT_VERSION = React.version;
 
 const NORMAL_GASYA = '通常ガシャ';
 const SP_GASYA = '記念ガシャ';
+const NORMAL_TITLE = '5個で1連';
+const SP_TITLE = '5個で1連。30連で10連無料';
 
 interface LibInfo {
   name: string;
@@ -184,10 +186,10 @@ function RensuTable() {
         <p>個</p>
       </div>
 
-      <div>
+      <div title={NORMAL_TITLE}>
         {NORMAL_GASYA}:{getNormalRensu(ryuseki).toLocaleString()}連, 余り:{getNormalRensuAmari(ryuseki).toLocaleString()}個
       </div>
-      <div>
+      <div title={SP_TITLE}>
         {SP_GASYA}:{getSpRensu(ryuseki).toLocaleString()}連 ({getSpRensuSet(ryuseki)}セット), 余り:{getSpRensuAmari(ryuseki).toLocaleString()}個
       </div>
     </CommonFrame>
@@ -228,10 +230,10 @@ function RyusekiTable() {
         <p>連</p>
       </div>
 
-      <div>
+      <div title={NORMAL_TITLE}>
         {NORMAL_GASYA}:{getNormalRyuseki(rensu).toLocaleString()}個
       </div>
-      <div>
+      <div title={SP_TITLE}>
         {SP_GASYA}:{getSpRyuseki(rensu).toLocaleString()}個
       </div>
     </CommonFrame>
@@ -254,7 +256,7 @@ function RyusekiTable2() {
   ];
 
   const rows = ryusekis.map((v) => {
-    return <tr key={v} className='hover:bg-gray-600 hover:text-gray-50'>
+    return <tr key={v} className='hover:bg-gray-600 hover:text-gray-50 hover:text-lg hover:font-semibold'>
       <td>{v.toLocaleString()}</td>
       <td>{getNormalRensu(v).toLocaleString()}</td>
       <td>{getSpRensu(v).toLocaleString()}</td>
@@ -268,8 +270,8 @@ function RyusekiTable2() {
         <thead className='text-right'>
           <tr className='text-gray-300 font-medium text-xs'>
             <th scope='col' className='w-16'>龍石 [個]</th>
-            <th scope='col' className='w-32'>{NORMAL_GASYA} [連]</th>
-            <th scope='col' className='w-32'>{SP_GASYA} [連]</th>
+            <th scope='col' className='w-32' title={NORMAL_TITLE}>{NORMAL_GASYA} [連]</th>
+            <th scope='col' className='w-32' title={SP_TITLE}>{SP_GASYA} [連]</th>
           </tr>
         </thead>
         <tbody className='text-right divide-y divide-gray-500 text-gray-300'>
