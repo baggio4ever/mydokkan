@@ -8,11 +8,31 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run dev      # Start development server at http://localhost:3000
 npm run build    # Build for production (static export to /out directory)
 npm run lint     # Run ESLint
-npm run start    # Start production server (after build)
 npm run deploy   # Deploy /out to GitHub Pages via gh-pages (run build first)
 ```
 
 No test runner is configured in this project.
+
+### ビルド後のローカル動作確認
+
+```bash
+# /out を ./dist/mydokkan/ にコピーしてから npx serve で確認する
+./copy_to_dist.command   # macOS/Linux
+copy_to_dist.bat         # Windows
+npx serve@latest dist    # http://localhost:3000/mydokkan でアクセス可能
+# または
+./run_npx_serve.command  # 上記2ステップをまとめたスクリプト
+```
+
+### S3 デプロイ
+
+```bash
+npm run build
+./copy_to_dist.command   # /out → ./dist/mydokkan/
+./upload2s3.command      # dist/mydokkan を S3 へアップロード
+```
+
+Windows では各 `.command` に対応する `.bat` ファイルが存在する。
 
 ## Architecture
 
